@@ -3,7 +3,8 @@
   "description": "Business API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "find src -name *.test.js | xargs mocha",
+    "app": "node src/index.js",
     "precommit": "eslint src"
   },
   "author": "Jon Whelan",
@@ -11,10 +12,14 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "csv-parse": "^1.2.0",
+    "express": "^4.15.2",
     "sqlite3": "^3.1.8"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "eslint": "^3.19.0",
-    "husky": "^0.13.3"
+    "husky": "^0.13.3",
+    "mocha": "^3.2.0",
+    "supertest": "^3.0.0"
   }
 }
