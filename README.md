@@ -43,7 +43,7 @@ After dependencies are installed:
      "uuid": "2859d6e0-1cb9-4fe9-bc00-97823a9fa4cb",
      "name": "Business name",
      "address": "1 Street",
-     "address2" "Suite 2",
+     "address2": "Suite 2",
      "city": "Austin",
      "state": "TX",
      "zip": "78704",
