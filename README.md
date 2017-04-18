@@ -33,27 +33,60 @@ After dependencies are installed:
 
 # API Documentation
 
-## Get business by ID
+## Models
+
+### Business
+
+```json
+ {
+     "id": 1,
+     "uuid": "2859d6e0-1cb9-4fe9-bc00-97823a9fa4cb",
+     "name": "Business name",
+     "address": "1 Street",
+     "address2" "Suite 2",
+     "city": "Austin",
+     "state": "TX",
+     "zip": "78704",
+     "country": "US",
+     "phone": "5551112323",
+     "website": "http://example.com",
+     "created_at": "2012-12-10 16:17:58"
+ }
+ ```
+
+## Endpoints
+
+### Get business by ID
  `GET /businesses/{id}`
 
 Responses:
 
 * `200 OK`
-  ```json
-   {
-       "id": 1,
-       "uuid": "2859d6e0-1cb9-4fe9-bc00-97823a9fa4cb",
-       "name": "Business name",
-       "address": "1 Street",
-       "address2" "Suite 2",
-       "city": "Austin",
-       "state": "TX",
-       "zip": "78704",
-       "country": "US",
-       "phone": "5551112323",
-       "website": "http://example.com",
-       "created_at": "2012-12-10 16:17:58"
-   }
-   ```
+  Body: `business` model
 
 * `404 Not Found`
+
+### Get businesses
+
+`GET /businesses[?page=1[&limit=50]]`
+
+Responses:
+
+* `200 OK`
+  Body:
+    ```json
+    {
+        "pagination": {
+            "total": 100
+        },
+        "businesses": "[business]"
+    }
+    ```
+
+* `400 Bad Request`
+  Body:
+    ```json
+    {
+      "message": "Application-specific error message"
+    }
+    ```
