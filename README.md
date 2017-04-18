@@ -27,6 +27,8 @@ After dependencies are installed:
 
 `npm run app`
 
+App will be hosted on `http://localhost:3000`
+
 ## Running Tests
 
 `npm test`
