@@ -109,13 +109,13 @@ describe('Update business by UUID', function () {
 
     it('must have a body', () => {
         return request(app)
-            .put(`/businesses/1`)
-            .expect(400)
+            .put('/businesses/1')
+            .expect(400);
     });
 
     it('only accepects whitelisted params', () => {
         return request(app)
-            .put(`/businesses/1`, JSON.stringify({
+            .put('/businesses/1', JSON.stringify({
                 notValid: 'bad'
             }))
             .expect(400)
@@ -126,10 +126,9 @@ describe('Update business by UUID', function () {
 
     it.only('updates supplied properties', () => {
         return request(app)
-            .put('/businesses/1', JSON.stringify({
-                name: 'Test business'
-            }))
+            .put('/businesses/1')
+            .send({name: 'Test'})
             .set('Accept', 'application/json')
-            .expect(200)
+            .expect(200);
     });
 });
