@@ -5,11 +5,14 @@ const Promise = require('bluebird');
 const dbh = new sqlite3.Database('./db/data.sqlite3');
 const runQuery = Promise.promisify(dbh.all, {context: dbh});
 const DEFAULT_RESULTS_PER_PAGE = 50;
+const bodyParser = require('body-parser');
 
 function isPositiveInteger(a) {
     const parsed = parseInt(a, 10);
     return parsed == a && parsed > 0;
 }
+
+app.use(bodyParser.json())
 
 app.get('/businesses', (req, res) => {
     const page = req.query.page || 1;
@@ -63,6 +66,37 @@ app.get('/businesses/:id', (req, res) => {
         }
 
         res.json(record);
+    });
+});
+
+/**
+ * Endpoint to update name, address and/or phone number of business
+ */
+app.post('/businesses/:id', (req, res) => {
+    if (req.body === undefined) {
+        return res.status(400).end();
+    }
+
+    console.log(req.body)
+    console.log(R.intersection(Object.keys(req.body), ['name', 'address', 'phone']));
+
+    if (!R.intersection(Object.keys(req.body), ['name', 'address', 'phone']).length) {
+        return res.status(400).send({
+            message: 'Only `name`, `address`, and `phone` keys are allowed'
+        });
+    }
+
+console.log('b');
+
+
+    const fields = Object.keys(req.body).map((name) => {
+        return `${name}=?`
+    }).join(', ');
+
+console.log('c');
+    dbh.run(`UPDATE businesses SET ${fields}`, req.body, (err, a) => {
+        console.log(err);
+        res.status(200).end();
     });
 });
 

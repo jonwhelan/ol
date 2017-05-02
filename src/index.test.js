@@ -99,3 +99,36 @@ describe('/businesses/{id} endpoint', () => {
             });
     });
 });
+
+describe('Update business by UUID', function () {
+    const WHITELIST = [
+        'name',
+        'address',
+        'phone'
+    ];
+
+    it('must have a body', () => {
+        return request(app)
+            .put(`/businesses/1`)
+            .expect(400)
+    });
+
+    it('only accepects whitelisted params', () => {
+        return request(app)
+            .put(`/businesses/1`, JSON.stringify({
+                notValid: 'bad'
+            }))
+            .expect(400)
+            .then((res) => {
+                assert.property(res.body, 'message');
+            });
+    });
+
+    it.only('updates supplied properties', () => {
+        return request(app)
+            .put('/businesses/1', JSON.stringify({
+                name: 'Test business'
+            }))
+            .expect(200)
+    });
+});
