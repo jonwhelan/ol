@@ -113,18 +113,17 @@ describe('Update business by UUID', function () {
             .expect(400);
     });
 
-    it('only accepects whitelisted params', () => {
+    it('only accepts whitelisted params', () => {
         return request(app)
-            .put('/businesses/1', JSON.stringify({
-                notValid: 'bad'
-            }))
+            .put('/businesses/1')
+            .send({notValid: 'bad'})
             .expect(400)
             .then((res) => {
                 assert.property(res.body, 'message');
             });
     });
 
-    it.only('updates supplied properties', () => {
+    it('updates supplied properties', () => {
         return request(app)
             .put('/businesses/1')
             .send({name: 'Test'})
