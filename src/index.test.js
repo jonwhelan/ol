@@ -129,6 +129,7 @@ describe('Update business by UUID', function () {
             .put('/businesses/1', JSON.stringify({
                 name: 'Test business'
             }))
+            .set('Accept', 'application/json')
             .expect(200)
     });
 });

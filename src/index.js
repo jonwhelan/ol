@@ -12,7 +12,7 @@ function isPositiveInteger(a) {
     return parsed == a && parsed > 0;
 }
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 app.get('/businesses', (req, res) => {
     const page = req.query.page || 1;
@@ -72,13 +72,10 @@ app.get('/businesses/:id', (req, res) => {
 /**
  * Endpoint to update name, address and/or phone number of business
  */
-app.post('/businesses/:id', (req, res) => {
+app.put('/businesses/:id', (req, res) => {
     if (req.body === undefined) {
         return res.status(400).end();
     }
-
-    console.log(req.body)
-    console.log(R.intersection(Object.keys(req.body), ['name', 'address', 'phone']));
 
     if (!R.intersection(Object.keys(req.body), ['name', 'address', 'phone']).length) {
         return res.status(400).send({
@@ -86,16 +83,11 @@ app.post('/businesses/:id', (req, res) => {
         });
     }
 
-console.log('b');
-
-
     const fields = Object.keys(req.body).map((name) => {
-        return `${name}=?`
+        return `${name}=?`;
     }).join(', ');
 
-console.log('c');
-    dbh.run(`UPDATE businesses SET ${fields}`, req.body, (err, a) => {
-        console.log(err);
+    dbh.run(`UPDATE businesses SET ${fields}`, R.values(req.body), (err, a) => {
         res.status(200).end();
     });
 });
